@@ -191,7 +191,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 100
 --- !u!114 &5963723355309778851
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -210,7 +210,7 @@ MonoBehaviour:
     m_Value: 1
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 44
+    m_Value: 62.81
   gaussianEnd:
     m_OverrideState: 0
     m_Value: 30
