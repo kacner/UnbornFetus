@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlauerMovement : MonoBehaviour
 {
@@ -13,7 +9,7 @@ public class PlauerMovement : MonoBehaviour
     public float JumpForce;
 
     public LayerMask GroundLayer;
-    private bool isGrounded = false;
+    public bool isGrounded = false;
     public GameObject rayObject;
 
     public Transform orientation;
@@ -22,8 +18,10 @@ public class PlauerMovement : MonoBehaviour
     float verticalInput;
 
     Vector3 moveDirection;
-
     Rigidbody rb;
+
+    public float gravityScale = 2f;
+    public float globalGravity = -9.82f;
 
     void Start()
     {
@@ -34,20 +32,28 @@ public class PlauerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-
-        if (Physics.Raycast(rayObject.transform.position, Vector3.down, out hit, 0.5f, GroundLayer))
-        {
+        if (Physics.Raycast(rayObject.transform.position, Vector3.down, 1f, GroundLayer))
             isGrounded = true;
-        }
-        else isGrounded = false;
+        else
+            isGrounded = false;
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && rb.velocity.y < 0f)
+        {
+            Vector3 gravity = globalGravity * gravityScale * Vector3.up;
+            rb.AddForce(gravity, ForceMode.Acceleration);
+        }
+
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
         {
             Jump();
         }
+        
+        if (isGrounded == false && Input.GetMouseButton(0))
+        {
+            rb.AddForce(transform.up * JumpForce * 1.5f);
+        }
 
-            OwerInput();
+        OwerInput();
     }
 
     private void FixedUpdate()
@@ -71,4 +77,5 @@ public class PlauerMovement : MonoBehaviour
     {
         rb.velocity = new Vector3(rb.velocity.x, JumpForce, rb.velocity.z);
     }
+    
 }
