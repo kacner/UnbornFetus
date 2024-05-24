@@ -1,4 +1,7 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class QuakeMovement : MonoBehaviour
 {
@@ -8,6 +11,7 @@ public class QuakeMovement : MonoBehaviour
     public float maxAirSpeed = 0.6f;
     public float friction = 8f;
     public float jumpForce = 5f;
+    public Slider slider;
 
     public LayerMask groundLeyer;
     public GameObject Cramernan;
@@ -17,10 +21,16 @@ public class QuakeMovement : MonoBehaviour
     //can you make a better job at it
 
     private bool IsGrounded = false;
-
+    private void Start()
+    {
+        slider.value = 0;
+    }
     private void Update()
     {
-        print(new Vector3(GetComponent<Rigidbody>().velocity.x, 0f, GetComponent<Rigidbody>().velocity.z).magnitude);
+        slider.value = GetComponent<Rigidbody>().velocity.magnitude;
+
+    //    print(new Vector3(GetComponent<Rigidbody>().velocity.x, 0f, GetComponent<Rigidbody>().velocity.z).magnitude);
+
     }
 
     private void FixedUpdate()
