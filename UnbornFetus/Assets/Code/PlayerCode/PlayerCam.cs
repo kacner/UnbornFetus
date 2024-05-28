@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCam : MonoBehaviour
 {
@@ -14,14 +15,17 @@ public class PlayerCam : MonoBehaviour
     float yRotation;
     float xRotation;
 
-    // Start is called before the first frame update
+    
+
     void Start()
     {
+        
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * snsX;

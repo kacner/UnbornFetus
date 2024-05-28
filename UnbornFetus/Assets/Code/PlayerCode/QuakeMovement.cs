@@ -27,7 +27,7 @@ public class QuakeMovement : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
+        //Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
         slider.value = GetComponent<Rigidbody>().velocity.magnitude;
     }
     private void FixedUpdate()
