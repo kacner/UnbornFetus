@@ -29,9 +29,7 @@ public class QuakeMovement : MonoBehaviour
     {
         //Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
         slider.value = GetComponent<Rigidbody>().velocity.magnitude;
-    }
-    private void FixedUpdate()
-    {
+
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         Vector3 playerVelocity = GetComponent<Rigidbody>().velocity;

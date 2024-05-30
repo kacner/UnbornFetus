@@ -6,7 +6,7 @@ public class MoveCam : MonoBehaviour
 {
 
     public Transform cameraPos;
-    void FixedUpdate()
+    void Update()
     {
         transform.position = cameraPos.position;
     }

@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class ShakeFOV : MonoBehaviour
 {
+    public TMP_Text textMeshPro;
     public ParticleSystem particleSystem;
     public Color startingColor;
-    public float alpha = 0.5f;
+    public float alpha = 0f;
 
     public QuakeMovement quakemovment;
     public float baseFOV = 60f;
@@ -33,6 +35,7 @@ public class ShakeFOV : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        textMeshPro.text = "x = velocity " + quakemovment.GetComponent<Rigidbody>().velocity.magnitude.ToString("F2") + " || alpha becomes " + alpha.ToString("F2");
         Mathf.Clamp(alpha, 0, 1);
         alpha = quakemovment.GetComponent<Rigidbody>().velocity.magnitude / 10f;
         AdjustFOV(quakemovment.GetComponent<Rigidbody>().velocity.magnitude);
@@ -64,12 +67,11 @@ public class ShakeFOV : MonoBehaviour
 
     void Speedlines(float velocity)
     {
-            float alpha = CalculateAlpha(velocity);
-           Debug.Log("x = velocity " + velocity + "|| alpha becomes " + alpha);
+        float alpha = CalculateAlpha(velocity);
 
-            Color particleColor = new Color(startingColor.r, startingColor.g, startingColor.b, alpha);
-            var mainModule = particleSystem.main;
-            mainModule.startColor = particleColor;
+        Color particleColor = new Color(startingColor.r, startingColor.g, startingColor.b, alpha);
+        var mainModule = particleSystem.main;
+        mainModule.startColor = particleColor;
     }
     float CalculateAlpha(float velocity)
     {
