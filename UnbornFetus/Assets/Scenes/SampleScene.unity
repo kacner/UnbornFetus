@@ -15492,9 +15492,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 1415669250}
-  particleSystem: {fileID: 8434852590349032946}
   startingColor: {r: 1, g: 1, b: 1, a: 0}
-  alpha: 0
+  alpha: 0.1
   quakemovment: {fileID: 1623369323}
   baseFOV: 60
   maxFOVChange: 30
@@ -35905,7 +35904,7 @@ GameObject:
   - component: {fileID: 976073652}
   m_Layer: 0
   m_Name: PlayerOBJ
-  m_TagString: Player
+  m_TagString: PlayerOBJ
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93904,7 +93903,7 @@ GameObject:
   - component: {fileID: 2608910852657451699}
   m_Layer: 0
   m_Name: SpeedLinesFX
-  m_TagString: Untagged
+  m_TagString: Speedlines
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -14,7 +14,7 @@ public class EnemyDestroy : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Player") && quakemovementScript.GetComponent<Rigidbody>().velocity.magnitude > 20)
+        if (collision.gameObject.CompareTag("PlayerOBJ") && quakemovementScript.GetComponent<Rigidbody>().velocity.magnitude > 20)
         {
                 Destroy(gameObject);
         }

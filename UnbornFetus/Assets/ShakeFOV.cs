@@ -6,8 +6,9 @@ using TMPro;
 
 public class ShakeFOV : MonoBehaviour
 {
+    private GameObject player;
     public TMP_Text textMeshPro;
-    public ParticleSystem particleSystem;
+    private ParticleSystem particleSystem;
     public Color startingColor;
     public float alpha = 0f;
 
@@ -21,11 +22,37 @@ public class ShakeFOV : MonoBehaviour
 
     void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        quakemovment = player.GetComponent<QuakeMovement>();
-        cam = GetComponent<Camera>();
-        originalPosition = cam.transform.localPosition;
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            quakemovment = player.GetComponent<QuakeMovement>();
+            if (quakemovment == null)
+            {
+                Debug.LogError("QuakeMovement component not found on player object.");
+            }
+        }
+        else
+            Debug.LogError("Player object not found with tag 'Player'.");
 
+
+        cam = GetComponent<Camera>();
+        if (cam != null)
+            originalPosition = cam.transform.localPosition;
+        else
+            Debug.LogError("Camera component not found on this game object.");
+
+
+        GameObject speedlinesObject = GameObject.FindGameObjectWithTag("Speedlines");
+        if (speedlinesObject != null)
+        {
+            particleSystem = speedlinesObject.GetComponent<ParticleSystem>();
+            if (particleSystem == null)
+            {
+                Debug.LogError("ParticleSystem component not found on Speedlines object.");
+            }
+        }
+        else
+            Debug.LogError("Speedlines object not found with tag 'Speedlines'.");
 
         Color particleColor = new Color(startingColor.r, startingColor.g, startingColor.b, alpha);
         var mainModule = particleSystem.main;
@@ -36,8 +63,7 @@ public class ShakeFOV : MonoBehaviour
     void Update()
     {
         textMeshPro.text = "x = velocity " + quakemovment.GetComponent<Rigidbody>().velocity.magnitude.ToString("F2") + " || alpha becomes " + alpha.ToString("F2");
-        Mathf.Clamp(alpha, 0, 1);
-        alpha = quakemovment.GetComponent<Rigidbody>().velocity.magnitude / 10f;
+        alpha = Mathf.Clamp(quakemovment.GetComponent<Rigidbody>().velocity.magnitude / 10f, 0, 1);
         AdjustFOV(quakemovment.GetComponent<Rigidbody>().velocity.magnitude);
         ApplyCameraShake(quakemovment.GetComponent<Rigidbody>().velocity.magnitude);
         Speedlines(quakemovment.GetComponent<Rigidbody>().velocity.magnitude);
