@@ -20,6 +20,8 @@ public class ShakeFOV : MonoBehaviour
     private Camera cam;
     private Vector3 originalPosition;
 
+    private float currentVelocity;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -34,13 +36,11 @@ public class ShakeFOV : MonoBehaviour
         else
             Debug.LogError("Player object not found with tag 'Player'.");
 
-
         cam = GetComponent<Camera>();
         if (cam != null)
             originalPosition = cam.transform.localPosition;
         else
             Debug.LogError("Camera component not found on this game object.");
-
 
         GameObject speedlinesObject = GameObject.FindGameObjectWithTag("Speedlines");
         if (speedlinesObject != null)
@@ -59,36 +59,45 @@ public class ShakeFOV : MonoBehaviour
         mainModule.startColor = particleColor;
     }
 
+    private void FixedUpdate()
+    {
+        currentVelocity = quakemovment.GetComponent<Rigidbody>().velocity.magnitude;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        textMeshPro.text = "x = velocity " + quakemovment.GetComponent<Rigidbody>().velocity.magnitude.ToString("F2") + " || alpha becomes " + alpha.ToString("F2");
-        alpha = Mathf.Clamp(quakemovment.GetComponent<Rigidbody>().velocity.magnitude / 10f, 0, 1);
-        AdjustFOV(quakemovment.GetComponent<Rigidbody>().velocity.magnitude);
-        ApplyCameraShake(quakemovment.GetComponent<Rigidbody>().velocity.magnitude);
-        Speedlines(quakemovment.GetComponent<Rigidbody>().velocity.magnitude);
-    }
-    void AdjustFOV(float velocity)
-    {
-        float fovChange = Mathf.Clamp(velocity, 0, maxFOVChange);
-        cam.fieldOfView = baseFOV + fovChange;
-        if (cam.fieldOfView <= 0)
-        {
-            Mathf.Lerp(baseFOV, 0, fovChange);
-        }
-    }
+        Debug.LogWarning("ShakingFOV");
+        textMeshPro.text = "x = velocity " + currentVelocity.ToString("F2") + " || alpha becomes " + alpha.ToString("F2");
+        alpha = Mathf.Clamp(currentVelocity / 10f, 0, 1);
 
-    void ApplyCameraShake(float velocity)
-    {
-        if (velocity > 15)
+        // Camera shake and FOV
+        if (currentVelocity > 0)
         {
-            float shakeAmount = Mathf.Sin(Time.time * shakeFrequency) * shakeIntensity * (velocity / 2);
-            cam.transform.localPosition = originalPosition + Random.insideUnitSphere * shakeAmount;
+            AdjustFOV(currentVelocity);
+            ApplyCameraShake(currentVelocity);
         }
         else
         {
             cam.transform.localPosition = originalPosition;
         }
+
+        Speedlines(currentVelocity);
+    }
+
+    void AdjustFOV(float velocity)
+    {
+        float fovChange = Mathf.Clamp(velocity, 0, maxFOVChange);
+        cam.fieldOfView = baseFOV + fovChange;
+        Mathf.Lerp(baseFOV, 0, fovChange);
+
+        //Debug.Log("DEBUG : RUNNING CODE AF1 : LERP VALUE = " + Mathf.Lerp(baseFOV, 0, fovChange));
+    }
+
+    void ApplyCameraShake(float velocity)
+    {
+        float shakeAmount = Mathf.Sin(Time.time * shakeFrequency) * shakeIntensity * (velocity / 2);
+        cam.transform.localPosition = originalPosition + Random.insideUnitSphere * shakeAmount;
     }
 
     void Speedlines(float velocity)
@@ -99,9 +108,11 @@ public class ShakeFOV : MonoBehaviour
         var mainModule = particleSystem.main;
         mainModule.startColor = particleColor;
     }
+
     float CalculateAlpha(float velocity)
     {
-        // Formel: f(x) = 1 / (1 + e^(-0.2 * (x - 40)))
+
+//      Formel: f(x) = 1 / (1 + e^(-0.2 * (x - 40)))
         return 1f / (1f + Mathf.Exp(-0.2f * (velocity - 40f)));
     }
 }
