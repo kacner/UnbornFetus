@@ -8,6 +8,7 @@ public class RotateX : MonoBehaviour
     private AudioSource A_Source;
     public float rotationSpeed = 50f;
     private Rigidbody rb;
+    public bool shouldSonicCoinFX = true;
     void Update()
     {
         A_Source = GetComponent<AudioSource>();
@@ -18,9 +19,15 @@ public class RotateX : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(DestroyAfterDelay(1f));
-            Vector3 randomDirection = Random.onUnitSphere;
-            rb.AddForce(randomDirection * 1.5f, ForceMode.Impulse);
+            
+            if (shouldSonicCoinFX) 
+            {
+                StartCoroutine(DestroyAfterDelay(1f));
+                Vector3 randomDirection = Random.onUnitSphere;
+                rb.AddForce(randomDirection * 1.5f, ForceMode.Impulse);
+            }
+            else
+                StartCoroutine(DestroyAfterDelay(0.3f));
         }
     }
     IEnumerator DestroyAfterDelay(float delay)

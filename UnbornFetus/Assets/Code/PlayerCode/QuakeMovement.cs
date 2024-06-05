@@ -11,7 +11,8 @@ public class QuakeMovement : MonoBehaviour
     public float maxAirSpeed = 0.6f;
     public float friction = 8f;
     public float jumpForce = 5f;
-    public Slider slider;
+    private Vector3 movement;
+    public Transform mainCamera;
 
     public LayerMask groundLeyer;
     public GameObject Cramernan;
@@ -21,14 +22,22 @@ public class QuakeMovement : MonoBehaviour
     //can you make a better job at it
 
     private bool IsGrounded = false;
+
+    public GameObject Karambit;
+    bool KarambitPickedup = false;
+
+    public float rotationSpeed = 5f;
     private void Start()
     {
-        slider.value = 0;
+        if (KarambitPickedup == false)
+        Karambit.SetActive(false);
     }
     private void Update()
     {
-        //Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
-        slider.value = GetComponent<Rigidbody>().velocity.magnitude;
+        if (GetComponent<Rigidbody>().velocity.magnitude > 1f)
+        {
+            FaceCamera();
+        }
 
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
@@ -103,7 +112,28 @@ public class QuakeMovement : MonoBehaviour
         return result;
     }
 
-    /*The MIT License (MIT)
+    public void EnableKarambit()
+    {
+        Karambit.SetActive(true);
+        KarambitPickedup = true;
+    }
+
+    void FaceCamera()
+    {
+        Vector3 directionToCamera = mainCamera.position - transform.position;
+        directionToCamera.y = 0;
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
+        
+        //offset V
+        Quaternion rotationOffset = Quaternion.Euler(0, -90f, 0);
+
+        targetRotation *= rotationOffset;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+/*The MIT License (MIT)
 
 Copyright (c) 2015 Till W.
 

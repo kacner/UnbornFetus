@@ -67,7 +67,6 @@ public class ShakeFOV : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogWarning("ShakingFOV");
         textMeshPro.text = "x = velocity " + currentVelocity.ToString("F2") + " || alpha becomes " + alpha.ToString("F2");
         alpha = Mathf.Clamp(currentVelocity / 10f, 0, 1);
 
