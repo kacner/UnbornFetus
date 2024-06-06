@@ -21,7 +21,7 @@ public class QuakeMovement : MonoBehaviour
     //changed up the variables a bit in case 
     //can you make a better job at it
 
-    private bool IsGrounded = false;
+    public bool IsGrounded = false;
 
     public GameObject Karambit;
     bool KarambitPickedup = false;
@@ -105,7 +105,7 @@ public class QuakeMovement : MonoBehaviour
         return jumpVelocity;
     }
 
-    private bool CheckGround()
+    public bool CheckGround()
     {
         Ray ray = new Ray(transform.position, Vector3.down);
         bool result = Physics.Raycast(ray, GetComponent<Collider>().bounds.extents.y + 0.1f, groundLeyer);

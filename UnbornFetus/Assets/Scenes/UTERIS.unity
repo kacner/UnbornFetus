@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -140,17 +140,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &61983612
-Transform:
+--- !u!224 &61983612
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61983611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -718, y: -349, z: -100}
-  m_LocalScale: {x: 0.10827091, y: 0.10827091, z: 0.10827091}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalScale: {x: 0.059999995, y: 0.059999995, z: 0.059999995}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1369342913}
   - {fileID: 692839525}
@@ -158,6 +158,11 @@ Transform:
   m_Father: {fileID: 190419053}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 242, y: 191}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &61983613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6237,6 +6242,7 @@ GameObject:
   - component: {fileID: 1200419075}
   - component: {fileID: 1200419077}
   - component: {fileID: 1200419078}
+  - component: {fileID: 1200419079}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6288,6 +6294,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   Cramernan: {fileID: 1508034892}
+  IsGrounded: 0
   Karambit: {fileID: 1744310140}
   rotationSpeed: 5
 --- !u!136 &1200419075
@@ -6367,6 +6374,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalDistance: 0
   textMeshPro: {fileID: 692839526}
+--- !u!114 &1200419079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200419072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56766ef7caca2b349b8ca786cdd941e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Spatter: {fileID: 203828288466886690, guid: f14795a83d9499745939964f776f6399, type: 3}
+  Point: {fileID: 1518364100}
 --- !u!1 &1271487950
 GameObject:
   m_ObjectHideFlags: 0
@@ -7016,7 +7037,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508034892}
   m_LocalRotation: {x: 0.20300017, y: -0, z: -0, w: 0.9791787}
-  m_LocalPosition: {x: -0.0099983215, y: 3.14, z: -3.4}
+  m_LocalPosition: {x: 0.4, y: 3.333, z: -3.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
