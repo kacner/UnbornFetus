@@ -17,8 +17,7 @@ public class PedoMeter : MonoBehaviour
 
     private void DOSTUFF()
     {
-        while(totalDistance < 999)
-        { 
+        
             Vector3 currentPosition = new Vector3(transform.position.x, 0f, transform.position.z);
             float distanceThisFrame = Vector3.Distance(currentPosition, lastPosition);
 
@@ -26,10 +25,8 @@ public class PedoMeter : MonoBehaviour
 
             lastPosition = currentPosition;
 
-            totalDistance /= 100f; 
-
             textMeshPro.text = totalDistance.ToString("F0");
-        }
+        
         totalDistance = 0f;
         lastPosition = Vector3.zero;
     }
