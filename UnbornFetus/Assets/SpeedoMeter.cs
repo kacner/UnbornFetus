@@ -9,9 +9,9 @@ public class SpeedoMeter : MonoBehaviour
     public float MinTilt = -149f;
     public float MaxTilt = -28f;
     public RectTransform arrow;
-    private float velocity = 0.0f;
+    public float velocity = 0.0f;
 
-    private void Update()
+    void Update()
     {
         velocity = Player.velocity.magnitude;
 
