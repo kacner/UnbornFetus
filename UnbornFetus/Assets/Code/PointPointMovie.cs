@@ -17,6 +17,7 @@ public class PointPointMovie : MonoBehaviour
     private bool isQuitting = false;
     public Button startButton;
     public Button QuitButton;
+    private bool HasgameStarted = false;
 
     public Volume globalVolume;
     private ColorAdjustments colorAdjustments;
@@ -74,6 +75,7 @@ public class PointPointMovie : MonoBehaviour
         QuitButton.enabled = false;
         isMoving = true;
         timTime = 0f;
+        HasgameStarted = true;
     }
 
     public void EnableQuit()

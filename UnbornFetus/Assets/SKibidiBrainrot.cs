@@ -14,13 +14,14 @@ public class SKibidiBrainrot : MonoBehaviour
     private Rigidbody rb;
     private HingeJoint joint;
     private float velocity;
+    public GameObject UmbilicalParticlesystem;
 
     void Start()
     {
         joint = GetComponent<HingeJoint>(); 
         rb = GetComponent<Rigidbody>();
         InvokeRepeating("ChangeDirection", 0f, changeInterval);
-
+        UmbilicalParticlesystem.SetActive(false);
         brakeAway = false;
         hasGameStarted = false;
         Time.timeScale = 0.5f;
@@ -33,24 +34,18 @@ public class SKibidiBrainrot : MonoBehaviour
 
         if (velocity > 10f && !brakeAway)
         {
+            UmbilicalParticlesystem.SetActive(true);
             Debug.Log("Disconnect called");
             brakeAway = true;
-
             transform.SetParent(null);
             Destroy(joint);
-
-            // Vector3 movement = new Vector3(0f, 0.0f, 0f);
-            //speed = 0;
-
-            // rb.velocity = movement; 
-            //rb.AddForce(movement * speed);
             rb.drag = 0f;
             rb.freezeRotation = false;
         }
 
             if (hasGameStarted)
             {
-                Time.timeScale = 1f;
+                Time.timeScale = 0.7f;
                 float moveHorizontal = Input.GetAxis("Horizontal");
                 float moveVertical = Input.GetAxis("Vertical");
                 if(!brakeAway)
@@ -64,7 +59,7 @@ public class SKibidiBrainrot : MonoBehaviour
                     moveHorizontal = 0;
                     moveVertical = 0;
                 }
-        }
+            }
     }
     void ChangeDirection()
     {
