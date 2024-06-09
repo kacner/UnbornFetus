@@ -13,6 +13,7 @@ public class SKibidiBrainrot : MonoBehaviour
 
     private Rigidbody rb;
     private HingeJoint joint;
+    private float velocity;
 
     void Start()
     {
@@ -22,30 +23,34 @@ public class SKibidiBrainrot : MonoBehaviour
 
         brakeAway = false;
         hasGameStarted = false;
+        Time.timeScale = 0.5f;
     }
 
     public void Update()
     {
+        Debug.Log(rb.velocity.magnitude);
+        velocity = rb.velocity.magnitude;
 
-        float velocity = rb.velocity.magnitude;
-
-        if (velocity > 10)
+        if (velocity > 10f && !brakeAway)
         {
             Debug.Log("Disconnect called");
             brakeAway = true;
 
             transform.SetParent(null);
             Destroy(joint);
-            
-            Vector3 movement = new Vector3(0f, 0.0f, 0f);
-            speed = 0;
 
-            rb.velocity = movement; 
-            rb.AddForce(movement * speed);
+            // Vector3 movement = new Vector3(0f, 0.0f, 0f);
+            //speed = 0;
+
+            // rb.velocity = movement; 
+            //rb.AddForce(movement * speed);
+            rb.drag = 0f;
+            rb.freezeRotation = false;
         }
 
             if (hasGameStarted)
             {
+                Time.timeScale = 1f;
                 float moveHorizontal = Input.GetAxis("Horizontal");
                 float moveVertical = Input.GetAxis("Vertical");
                 if(!brakeAway)
@@ -63,7 +68,7 @@ public class SKibidiBrainrot : MonoBehaviour
     }
     void ChangeDirection()
     {
-        if (hasGameStarted)
+        if (hasGameStarted && !brakeAway)
         {
             float randomDirectionX = UnityEngine.Random.Range(-1f, 1f);
             Vector3 randomDirection = new Vector3(randomDirectionX, 0f, 0f).normalized;
