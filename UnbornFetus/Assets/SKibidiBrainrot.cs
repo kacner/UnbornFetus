@@ -6,32 +6,59 @@ using UnityEngine;
 public class SKibidiBrainrot : MonoBehaviour
 {
     public float speed = 10f;
-     private float changeInterval = 0.7f;
+    private float changeInterval = 0.7f;
+
+    public bool hasGameStarted;
+    public bool brakeAway;
+
     private Rigidbody rb;
-    public bool hasGameStarted = false;
+    private HingeJoint joint;
 
     void Start()
     {
+        joint = GetComponent<HingeJoint>(); 
         rb = GetComponent<Rigidbody>();
         InvokeRepeating("ChangeDirection", 0f, changeInterval);
+
+        brakeAway = false;
+        hasGameStarted = false;
     }
 
-    void Update()
+    public void Update()
     {
-        if(rb.velocity.magnitude > 10)
+
+        float velocity = rb.velocity.magnitude;
+
+        if (velocity > 10)
         {
-           //make child dissconnect from parten which is the bone_end
-        }
-        Debug.Log(rb.velocity.magnitude);
+            Debug.Log("Disconnect called");
+            brakeAway = true;
 
-        if (hasGameStarted)
-        {
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
+            transform.SetParent(null);
+            Destroy(joint);
+            
+            Vector3 movement = new Vector3(0f, 0.0f, 0f);
+            speed = 0;
 
-            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-
+            rb.velocity = movement; 
             rb.AddForce(movement * speed);
+        }
+
+            if (hasGameStarted)
+            {
+                float moveHorizontal = Input.GetAxis("Horizontal");
+                float moveVertical = Input.GetAxis("Vertical");
+                if(!brakeAway)
+                {
+                    Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+
+                    rb.AddForce(movement * speed);
+                }
+                else
+                {
+                    moveHorizontal = 0;
+                    moveVertical = 0;
+                }
         }
     }
     void ChangeDirection()
