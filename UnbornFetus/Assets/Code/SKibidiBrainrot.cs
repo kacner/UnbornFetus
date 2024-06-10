@@ -15,6 +15,7 @@ public class SKibidiBrainrot : MonoBehaviour
     private HingeJoint joint;
     private float velocity;
     public GameObject UmbilicalParticlesystem;
+    public PointPointMovie pointpointmove;
 
     void Start()
     {
@@ -41,6 +42,7 @@ public class SKibidiBrainrot : MonoBehaviour
             Destroy(joint);
             rb.drag = 0f;
             rb.freezeRotation = false;
+            pointpointmove.StartCoroutine(pointpointmove.StartMoveDown());
         }
 
             if (hasGameStarted)

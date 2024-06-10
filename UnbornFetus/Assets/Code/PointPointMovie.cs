@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -84,10 +85,9 @@ public class PointPointMovie : MonoBehaviour
         startButton.enabled = false;
         QuitButton.enabled = false;
     }
-
-    public IEnumerator Quit()
+    public IEnumerator FadeOut()
     {
-        isQuitting = true;
+        
         float startExposure = 0f;
         float endExposure = -10.0f;
         float lerpDuration = 2f;
@@ -104,6 +104,12 @@ public class PointPointMovie : MonoBehaviour
         }
 
         colorAdjustments.postExposure.value = endExposure;
+    }
+    public IEnumerator Quit()
+    {
+        isQuitting = true;
+
+        yield return StartCoroutine(FadeOut());
 
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -111,5 +117,19 @@ public class PointPointMovie : MonoBehaviour
             Application.Quit();
         #endif
             yield return null;
+    }
+    public IEnumerator MoveDown()
+    {
+        yield return new WaitForSeconds(4f);
+
+        Vector3 newPosition = transform.position;
+        newPosition.y -= 10f * Time.deltaTime;
+        transform.position = newPosition;
+
+        StartCoroutine(FadeOut());
+    }
+    public IEnumerator StartMoveDown()
+    {
+        yield return StartCoroutine(MoveDown());
     }
 }
