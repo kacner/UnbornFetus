@@ -121,16 +121,8 @@ public class PointPointMovie : MonoBehaviour
     public IEnumerator MoveDown()
     {
         yield return new WaitForSeconds(1f);
-
-        /*Vector3 targetPosition = transform.position + Vector3.down * 200f;
-        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-            yield return null;
-        }*/
-
         StartCoroutine(FadeOut());
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("UTERIS");
     }
     public IEnumerator StartMoveDown()
