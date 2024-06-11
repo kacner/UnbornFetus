@@ -1,8 +1,8 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PointPointMovie : MonoBehaviour
@@ -24,8 +24,8 @@ public class PointPointMovie : MonoBehaviour
     private ColorAdjustments colorAdjustments;
 
     public SKibidiBrainrot skibidibrainrot;
-
     public float exposureValue = 0.0f;
+    public Transform target;
 
     private void Start()
     {
@@ -120,13 +120,18 @@ public class PointPointMovie : MonoBehaviour
     }
     public IEnumerator MoveDown()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(1f);
 
-        Vector3 newPosition = transform.position;
-        newPosition.y -= 10f * Time.deltaTime;
-        transform.position = newPosition;
+        /*Vector3 targetPosition = transform.position + Vector3.down * 200f;
+        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            yield return null;
+        }*/
 
         StartCoroutine(FadeOut());
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene("UTERIS");
     }
     public IEnumerator StartMoveDown()
     {

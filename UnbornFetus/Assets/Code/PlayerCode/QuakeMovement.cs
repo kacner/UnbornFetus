@@ -108,7 +108,7 @@ public class QuakeMovement : MonoBehaviour
     public bool CheckGround()
     {
         Ray ray = new Ray(transform.position, Vector3.down);
-        bool result = Physics.Raycast(ray, GetComponent<Collider>().bounds.extents.y + 0.1f, groundLeyer);
+        bool result = Physics.Raycast(ray, GetComponent<Collider>().bounds.extents.y + 0.1f);
         return result;
     }
 

@@ -30,7 +30,6 @@ public class SKibidiBrainrot : MonoBehaviour
 
     public void Update()
     {
-        Debug.Log(rb.velocity.magnitude);
         velocity = rb.velocity.magnitude;
 
         if (velocity > 10f && !brakeAway)

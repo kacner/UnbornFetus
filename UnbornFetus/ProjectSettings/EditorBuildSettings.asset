@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Start.unity
+    guid: 3f844ad1e996eac4895cf88868399ed7
+  - enabled: 1
     path: Assets/Scenes/UTERIS.unity
     guid: 62ca7aaad4470a4429fe7c9cdc8d44d4
+  - enabled: 1
+    path: Assets/Scenes/UTERIS 1.unity
+    guid: b492dd174f44c2a40a3c177b70b69346
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 82d6be4199fb7d544b3f640565b1921a,
       type: 2}
