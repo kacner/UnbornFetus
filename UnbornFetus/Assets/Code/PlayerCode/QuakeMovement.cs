@@ -5,11 +5,9 @@ using UnityEngine.UI;
 
 public class QuakeMovement : MonoBehaviour
 {
-    [Header("I kinda mighthave like Stole it a lil bit :3")]
+    //I kinda mighthave like Stole it a lil bit :3
     //changed up the variables a bit in case 
     //can you make a better job at it
-
-    [Space]
 
     QuakeMovement quakeMovement;
 
@@ -20,7 +18,6 @@ public class QuakeMovement : MonoBehaviour
     public float maxAirSpeed = 0.6f;
     public float friction = 8f;
     public float jumpForce = 5f;
-    public Transform mainCamera;
     public bool IsGrounded = false;
 
     private Rigidbody rb;
@@ -30,6 +27,7 @@ public class QuakeMovement : MonoBehaviour
     [Header("Camera Settings")]
 
     public GameObject Cameran;
+    public Transform mainCamera;
 
     [Space]
 
@@ -47,9 +45,10 @@ public class QuakeMovement : MonoBehaviour
     [Space]
 
     [Header("PedoMeter Settings")]
+    public TextMeshProUGUI textMeshPro;
+
     private Vector3 lastPosition;
     private float totalDistance;
-    public TextMeshProUGUI textMeshPro;
 
     [Space]
 
@@ -62,6 +61,11 @@ public class QuakeMovement : MonoBehaviour
     private float waitTimer; // Add a timer variable
     private bool repater;
 
+    [Space]
+
+    [Header("Karambit Settings")]
+    public float KarambitrotationSpeed = 360f;
+    private bool Inspecting = false;
     private void Start()
     {
         quakeMovement = GetComponent<QuakeMovement>();
@@ -84,6 +88,12 @@ public class QuakeMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKey(KeyCode.F) && !Inspecting)
+        {
+            Inspecting = true;
+            StartCoroutine(Inspec1());
+        }
+
         float timeTime = Time.deltaTime;
         if (quakeMovement != null && quakeMovement.CheckGround() != true)
         {
@@ -181,11 +191,10 @@ public class QuakeMovement : MonoBehaviour
 
         return jumpVelocity;
     }
-
     public bool CheckGround()
     {
         Ray ray = new Ray(transform.position, Vector3.down);
-        bool result = Physics.Raycast(ray, GetComponent<Collider>().bounds.extents.y + 0.1f);
+        bool result = Physics.Raycast(ray, GetComponent<Collider>().bounds.extents.y + 0.1f, ~0, QueryTriggerInteraction.Ignore);
         return result;
     }
     void FaceCamera()
@@ -261,6 +270,21 @@ public class QuakeMovement : MonoBehaviour
 
         totalDistance = 0f;
         lastPosition = Vector3.zero;
+    }
+
+    public IEnumerator Inspec1()
+    {
+        float totalRotation = 0f;
+
+        while (totalRotation < 360f)
+        {
+            float rotationAmount = KarambitrotationSpeed * Time.deltaTime;
+            Karambit.transform.Rotate(0, -rotationAmount, 0);
+            totalRotation += rotationAmount;
+
+            yield return null;
+        }
+        Inspecting = false;
     }
 
     /*The MIT License (MIT)
