@@ -36,7 +36,7 @@ public class QuakeMovement : MonoBehaviour
     public float rotationSpeed = 5f;
     public TextMeshProUGUI CoinCountTmp;
 
-    private RotateX rotateXscript;
+    private CoinFunctionality coinFucntionality;
     private bool CanPickupSpeedCoin = true;
     private bool CanPickupCoin = true;
     private int coinCount = 0;
@@ -217,15 +217,15 @@ public class QuakeMovement : MonoBehaviour
         if (other.gameObject.tag == "SpeedCoin" && CanPickupSpeedCoin)
         {
             CanPickupSpeedCoin = false;
-            rotateXscript = other.GetComponent<RotateX>();
-            rotateXscript.collition();
+            coinFucntionality = other.GetComponent<CoinFunctionality>();
+            coinFucntionality.collition();
             rb.velocity = new Vector3(rb.velocity.x * 1.5f, rb.velocity.y, rb.velocity.z * 1.5f);
             StartCoroutine(SpeedCoinTimer());
         }
         if (!KarambitPickedup && other.gameObject.tag == "KarambitPickup")
         {
-            rotateXscript = other.GetComponent<RotateX>();
-            rotateXscript.collition();
+            coinFucntionality = other.GetComponent<CoinFunctionality>();
+            coinFucntionality.collition();
             
             Karambit.SetActive(true);
             KarambitPickedup = true;
@@ -234,8 +234,8 @@ public class QuakeMovement : MonoBehaviour
         {
 
             CanPickupCoin = false;
-            rotateXscript = other.GetComponent<RotateX>();
-            rotateXscript.collition();
+            coinFucntionality = other.GetComponent<CoinFunctionality>();
+            coinFucntionality.collition();
             coinCount++;
             StartCoroutine(CoinTimer());
         }

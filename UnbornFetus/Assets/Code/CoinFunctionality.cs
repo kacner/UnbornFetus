@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-public class RotateX : MonoBehaviour
+public class CoinFunctionality : MonoBehaviour
 {
     private AudioSource A_Source;
     public bool shouldSonicCoinFX = true;
