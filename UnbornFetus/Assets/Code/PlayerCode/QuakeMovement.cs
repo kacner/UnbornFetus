@@ -2,45 +2,115 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class QuakeMovement : MonoBehaviour
 {
+    [Header("I kinda mighthave like Stole it a lil bit :3")]
+    //changed up the variables a bit in case 
+    //can you make a better job at it
+
+    [Space]
+
+    QuakeMovement quakeMovement;
+
+    [Header("Movement Settings")]
     public float accel = 200f;
     public float airAccel = 200f;
     public float maxSpeed = 6.4f;
     public float maxAirSpeed = 0.6f;
     public float friction = 8f;
     public float jumpForce = 5f;
-    private Vector3 movement;
     public Transform mainCamera;
+    public bool IsGrounded = false;
 
     private Rigidbody rb;
 
-    public LayerMask groundLeyer;
-    public GameObject Cramernan;
+    [Space]
 
-    [Header("I kinda mighthave like Stole it a lil bit :3")]
-    //changed up the variables a bit in case 
-    //can you make a better job at it
+    [Header("Camera Settings")]
 
-    public bool IsGrounded = false;
+    public GameObject Cameran;
 
+    [Space]
+
+    [Header("PickUps!")]
     public GameObject Karambit;
-    bool KarambitPickedup = false;
+    public float rotationSpeed = 5f;
+    public TextMeshProUGUI CoinCountTmp;
 
     private RotateX rotateXscript;
     private bool CanPickupSpeedCoin = true;
-    public float rotationSpeed = 5f;
+    private bool CanPickupCoin = true;
+    private int coinCount = 0;
+    private bool KarambitPickedup = false;
+
+    [Space]
+
+    [Header("PedoMeter Settings")]
+    private Vector3 lastPosition;
+    private float totalDistance;
+    public TextMeshProUGUI textMeshPro;
+
+    [Space]
+
+    [Header("SplatterSettings")]
+    public GameObject landingSplatter;
+    public GameObject walkingSplatter;
+    public Transform Point;
+    public float waitingValue;
+
+    private float waitTimer; // Add a timer variable
+    private bool repater;
+
     private void Start()
     {
+        quakeMovement = GetComponent<QuakeMovement>();
+
+        if (quakeMovement == null)
+        {
+            Debug.LogError("QuakeMovement component not found on " + gameObject.name);
+        }
+        waitTimer = waitingValue; // Initialize the wait timer
+
+        lastPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+        InvokeRepeating("DOSTUFF", 0.5f, 0.5f);
+
         rb = GetComponent<Rigidbody>();
 
         if (KarambitPickedup == false)
         Karambit.SetActive(false);
+
+        InvokeRepeating("UpdateCoinCount", 1, 1);
     }
     private void Update()
     {
+        float timeTime = Time.deltaTime;
+        if (quakeMovement != null && quakeMovement.CheckGround() != true)
+        {
+            repater = true;
+        }
+
+        if (repater)
+        {
+            if (quakeMovement != null && quakeMovement.CheckGround())
+            {
+                Instantiate(landingSplatter, Point.transform.position, landingSplatter.transform.rotation);
+                repater = false;
+            }
+        }
+
+        if (waitTimer > 0)
+        {
+            waitTimer -= timeTime; // Decrement the timer
+            Debug.Log("timer :" + waitTimer);
+        }
+        else
+        {
+            if (quakeMovement != null && quakeMovement.CheckGround())
+                Instantiate(walkingSplatter, Point.transform.position, walkingSplatter.transform.rotation);
+            waitTimer = waitingValue;
+        }
+
         if (GetComponent<Rigidbody>().velocity.magnitude > 1f)
         {
             FaceCamera();
@@ -79,7 +149,7 @@ public class QuakeMovement : MonoBehaviour
         if (!IsGrounded)
             curMaxSpeed = maxAirSpeed;
 
-        Vector3 camRotation = new Vector3(0f, Cramernan.transform.rotation.eulerAngles.y, 0f);
+        Vector3 camRotation = new Vector3(0f, Cameran.transform.rotation.eulerAngles.y, 0f);
         Vector3 inputVelocity = Quaternion.Euler(camRotation) *
                                 new Vector3(input.x * curAccel, 0f, input.y * curAccel);
 
@@ -118,13 +188,6 @@ public class QuakeMovement : MonoBehaviour
         bool result = Physics.Raycast(ray, GetComponent<Collider>().bounds.extents.y + 0.1f);
         return result;
     }
-
-    public void EnableKarambit()
-    {
-        Karambit.SetActive(true);
-        KarambitPickedup = true;
-    }
-
     void FaceCamera()
     {
         Vector3 directionToCamera = mainCamera.position - transform.position;
@@ -150,12 +213,54 @@ public class QuakeMovement : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x * 1.5f, rb.velocity.y, rb.velocity.z * 1.5f);
             StartCoroutine(SpeedCoinTimer());
         }
+        if (!KarambitPickedup && other.gameObject.tag == "KarambitPickup")
+        {
+            rotateXscript = other.GetComponent<RotateX>();
+            rotateXscript.collition();
+            
+            Karambit.SetActive(true);
+            KarambitPickedup = true;
+        }
+        if (other.gameObject.tag == "Coin" && CanPickupCoin)
+        {
+
+            CanPickupCoin = false;
+            rotateXscript = other.GetComponent<RotateX>();
+            rotateXscript.collition();
+            coinCount++;
+            StartCoroutine(CoinTimer());
+        }
     }
 
     private IEnumerator SpeedCoinTimer()
     {
         yield return new WaitForSeconds(0.5f);
         CanPickupSpeedCoin = true;
+    }
+    private IEnumerator CoinTimer()
+    {
+        yield return new WaitForSeconds(0.02f);
+        CanPickupCoin = true;
+    }
+
+    void UpdateCoinCount()
+    {
+        CoinCountTmp.text = "coins : " + coinCount.ToString();
+    }
+    private void DOSTUFF()
+    {
+
+        Vector3 currentPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+        float distanceThisFrame = Vector3.Distance(currentPosition, lastPosition);
+
+        totalDistance += distanceThisFrame;
+
+        lastPosition = currentPosition;
+
+        textMeshPro.text = totalDistance.ToString("F0");
+
+        totalDistance = 0f;
+        lastPosition = Vector3.zero;
     }
 
     /*The MIT License (MIT)
