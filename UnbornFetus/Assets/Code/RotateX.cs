@@ -1,25 +1,18 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 public class RotateX : MonoBehaviour
 {
     private AudioSource A_Source;
-    public float rotationSpeed = 50f;
-    private Rigidbody rb;
     public bool shouldSonicCoinFX = true;
-    void Update()
+    private Rigidbody rb;
+
+    private void Start()
     {
-        A_Source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-        transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime);
+        A_Source = GetComponent<AudioSource>();
     }
-    void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            
+    public void collition()
+    { 
             if (shouldSonicCoinFX) 
             {
                 StartCoroutine(DestroyAfterDelay(1f));
@@ -28,7 +21,6 @@ public class RotateX : MonoBehaviour
             }
             else
                 StartCoroutine(DestroyAfterDelay(0.3f));
-        }
     }
     IEnumerator DestroyAfterDelay(float delay)
     {

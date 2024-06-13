@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class QuakeMovement : MonoBehaviour
     private Vector3 movement;
     public Transform mainCamera;
 
+    private Rigidbody rb;
+
     public LayerMask groundLeyer;
     public GameObject Cramernan;
 
@@ -26,9 +29,13 @@ public class QuakeMovement : MonoBehaviour
     public GameObject Karambit;
     bool KarambitPickedup = false;
 
+    private RotateX rotateXscript;
+    private bool CanPickupSpeedCoin = true;
     public float rotationSpeed = 5f;
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
+
         if (KarambitPickedup == false)
         Karambit.SetActive(false);
     }
@@ -133,25 +140,43 @@ public class QuakeMovement : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-/*The MIT License (MIT)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "SpeedCoin" && CanPickupSpeedCoin)
+        {
+            CanPickupSpeedCoin = false;
+            rotateXscript = other.GetComponent<RotateX>();
+            rotateXscript.collition();
+            rb.velocity = new Vector3(rb.velocity.x * 1.5f, rb.velocity.y, rb.velocity.z * 1.5f);
+            StartCoroutine(SpeedCoinTimer());
+        }
+    }
 
-Copyright (c) 2015 Till W.
+    private IEnumerator SpeedCoinTimer()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CanPickupSpeedCoin = true;
+    }
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+    /*The MIT License (MIT)
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+    Copyright (c) 2015 Till W.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.*/
 }
