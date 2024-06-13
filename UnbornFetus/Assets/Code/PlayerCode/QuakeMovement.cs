@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class QuakeMovement : MonoBehaviour
@@ -88,6 +89,12 @@ public class QuakeMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
+
         if (Input.GetKey(KeyCode.F) && !Inspecting)
         {
             Inspecting = true;
@@ -112,7 +119,6 @@ public class QuakeMovement : MonoBehaviour
         if (waitTimer > 0)
         {
             waitTimer -= timeTime; // Decrement the timer
-            Debug.Log("timer :" + waitTimer);
         }
         else
         {
