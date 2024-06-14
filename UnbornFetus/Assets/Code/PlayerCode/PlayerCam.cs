@@ -27,6 +27,7 @@ public class PlayerCam : MonoBehaviour
     public Transform cameraPos; // Position of the camera
 
     private Camera cam; // Camera component
+    public Camera Overlaycam; // Camera component
     private Vector3 originalPosition; // Original position of the camera
     private float currentVelocity; // Current velocity of the player
 
@@ -108,6 +109,7 @@ public class PlayerCam : MonoBehaviour
         // Adjust the Field of View based on the current velocity
         float fovChange = Mathf.Clamp(velocity, 0, maxFOVChange);
         cam.fieldOfView = baseFOV + fovChange;
+        Overlaycam.fieldOfView = baseFOV + fovChange;
         Mathf.Lerp(baseFOV, 0, fovChange);
     }
 

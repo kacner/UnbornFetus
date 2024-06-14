@@ -35,12 +35,12 @@ public class QuakeMovement : MonoBehaviour
     [Header("PickUps!")]
     public GameObject Karambit;
     public float rotationSpeed = 5f;
-    public TextMeshProUGUI CoinCountTmp;
+    public TextMeshPro CoinCountTmp;
+    public int coinCount = 0;
 
     private CoinFunctionality coinFucntionality;
     private bool CanPickupSpeedCoin = true;
     private bool CanPickupCoin = true;
-    private int coinCount = 0;
     private bool KarambitPickedup = false;
 
     [Space]
@@ -61,12 +61,19 @@ public class QuakeMovement : MonoBehaviour
 
     private float waitTimer; // Add a timer variable
     private bool repater;
+    private float randomAngle;
 
     [Space]
 
     [Header("Karambit Settings")]
     public float KarambitrotationSpeed = 360f;
     private bool Inspecting = false;
+
+    [Space]
+
+    [Header("Misc")]
+    public bool Restartable;
+    public GameObject SlotmachineParent;
     private void Start()
     {
         quakeMovement = GetComponent<QuakeMovement>();
@@ -89,7 +96,7 @@ public class QuakeMovement : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && Restartable)
         {
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
@@ -102,7 +109,7 @@ public class QuakeMovement : MonoBehaviour
         }
 
         float timeTime = Time.deltaTime;
-        if (quakeMovement != null && quakeMovement.CheckGround() != true)
+        /*if (quakeMovement != null && quakeMovement.CheckGround() != true)
         {
             repater = true;
         }
@@ -114,7 +121,7 @@ public class QuakeMovement : MonoBehaviour
                 Instantiate(landingSplatter, Point.transform.position, landingSplatter.transform.rotation);
                 repater = false;
             }
-        }
+        }*/
 
         if (waitTimer > 0)
         {
@@ -122,9 +129,12 @@ public class QuakeMovement : MonoBehaviour
         }
         else
         {
-            if (quakeMovement != null && quakeMovement.CheckGround())
-                Instantiate(walkingSplatter, Point.transform.position, walkingSplatter.transform.rotation);
-            waitTimer = waitingValue;
+            if (quakeMovement != null && quakeMovement.CheckGround() && rb.velocity.magnitude > 2f)
+            {
+                randomAngle = Random.Range(0f, 360f);
+                Instantiate(walkingSplatter, Point.transform.position, Quaternion.Euler(0f, randomAngle, 0f));
+            }
+                waitTimer = waitingValue;
         }
 
         if (GetComponent<Rigidbody>().velocity.magnitude > 1f)
@@ -226,9 +236,9 @@ public class QuakeMovement : MonoBehaviour
             coinFucntionality = other.GetComponent<CoinFunctionality>();
             coinFucntionality.collition();
             rb.velocity = new Vector3(rb.velocity.x * 1.5f, rb.velocity.y, rb.velocity.z * 1.5f);
-            StartCoroutine(SpeedCoinTimer());
+            StartCoroutine(SpeedCoinTimer(0.5f));
         }
-        if (!KarambitPickedup && other.gameObject.tag == "KarambitPickup")
+        if (!KarambitPickedup && other.gameObject.tag == "KarambitPickup" && !SlotmachineParent.activeSelf)
         {
             coinFucntionality = other.GetComponent<CoinFunctionality>();
             coinFucntionality.collition();
@@ -238,33 +248,31 @@ public class QuakeMovement : MonoBehaviour
         }
         if (other.gameObject.tag == "Coin" && CanPickupCoin)
         {
-
             CanPickupCoin = false;
             coinFucntionality = other.GetComponent<CoinFunctionality>();
             coinFucntionality.collition();
             coinCount++;
-            StartCoroutine(CoinTimer());
+            StartCoroutine(CoinTimer(0.2f));
         }
     }
 
-    private IEnumerator SpeedCoinTimer()
+    private IEnumerator CoinTimer(float time)
     {
-        yield return new WaitForSeconds(0.5f);
-        CanPickupSpeedCoin = true;
-    }
-    private IEnumerator CoinTimer()
-    {
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForSeconds(time);
         CanPickupCoin = true;
+    }
+    private IEnumerator SpeedCoinTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        CanPickupSpeedCoin = true;
     }
 
     void UpdateCoinCount()
     {
-        CoinCountTmp.text = "coins : " + coinCount.ToString();
+        CoinCountTmp.text = "$" + coinCount.ToString();
     }
     private void DOSTUFF()
     {
-
         Vector3 currentPosition = new Vector3(transform.position.x, 0f, transform.position.z);
         float distanceThisFrame = Vector3.Distance(currentPosition, lastPosition);
 

@@ -1,0 +1,4 @@
+gör coin hitboxes större
+fixa cameran
+first person
+fixa movement scriptet

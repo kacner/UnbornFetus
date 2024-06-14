@@ -57,7 +57,6 @@ public class SpashAni : MonoBehaviour
                 if (waitTimer > 0)
                 {
                     waitTimer -= timeTime; // Decrement the timer
-                    Debug.Log("timer :" + waitTimer);
                 }
                 else
                 {
