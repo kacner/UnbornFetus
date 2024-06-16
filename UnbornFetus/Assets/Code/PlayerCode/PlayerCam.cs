@@ -51,6 +51,10 @@ public class PlayerCam : MonoBehaviour
         mainModule.startColor = particleColor;
     }
 
+    private void Awake()
+    {
+        Time.timeScale = 1f;
+    }
     private void FixedUpdate()
     {
         // Update the current velocity based on the player's rigidbody velocity

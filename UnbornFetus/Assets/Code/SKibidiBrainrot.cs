@@ -52,12 +52,13 @@ public class SKibidiBrainrot : MonoBehaviour
     public void Update()
     {
         velocity = rb.velocity.magnitude; // Update current velocity
+        Debug.Log(velocity);
 
         if (hasGameStarted)
             helpTimer += Time.deltaTime; // Increment help timer if the game has started
 
         // Check if the object should break away
-        if (velocity > 10f && !brakeAway && hasGameStarted)
+        if (velocity > 7f && !brakeAway && hasGameStarted)
         {
             UmbilicalParticlesystem.SetActive(true); // Activate umbilical particle system
 
