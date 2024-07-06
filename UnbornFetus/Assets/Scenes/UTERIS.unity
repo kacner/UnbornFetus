@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -73030,7 +73030,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1200419073}
   - component: {fileID: 1200419076}
-  - component: {fileID: 1200419074}
+  - component: {fileID: 1200419077}
   - component: {fileID: 1200419075}
   m_Layer: 0
   m_Name: Player
@@ -73060,41 +73060,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1200419074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200419072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0428bf7d2ce492d48bb203a851fd4ca6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  accel: 100
-  airAccel: 200
-  maxSpeed: 6.4
-  maxAirSpeed: 10
-  friction: 8
-  jumpForce: 5
-  IsGrounded: 0
-  Cameran: {fileID: 1909962158}
-  mainCamera: {fileID: 1508034893}
-  Karambit: {fileID: 919132148343158564}
-  rotationSpeed: 5
-  CoinCountTmp: {fileID: 2050388766}
-  coinCount: 400
-  textMeshPro: {fileID: 692839526}
-  landingSplatter: {fileID: 203828288466886690, guid: f14795a83d9499745939964f776f6399,
-    type: 3}
-  walkingSplatter: {fileID: 5028021732295796411, guid: 2ebf928898f483343a45999d8df4a0d3,
-    type: 3}
-  Point: {fileID: 1518364100}
-  waitingValue: 0.07
-  KarambitrotationSpeed: 360
-  Restartable: 0
-  SlotmachineParent: {fileID: 1423342412}
 --- !u!136 &1200419075
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -73145,6 +73110,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1200419077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200419072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23deb8a8e9fdcbd4ca697a808dd3c554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundAcceleration: 200
+  maxGroundSpeed: 6.4
+  friction: 8
+  maxAirSpeed: 0.6
+  airAcceleration: 200
+  jumpForce: 5
+  isGrounded: 0
+  Cameran: {fileID: 1909962158}
+  mainCamera: {fileID: 1508034893}
+  rayDirection: {x: 0, y: -1, z: 0}
+  rayDistance: 0.1
+  rotationSpeed: 5
+  coinCount: 0
+  KarambitrotationSpeed: 360
+  SlotmachineParent: {fileID: 1423342412}
+  Karambit: {fileID: 919132148343158564}
+  CoinCountTmp: {fileID: 2050388766}
+  textMeshPro: {fileID: 692839526}
 --- !u!1 &1201781345
 GameObject:
   m_ObjectHideFlags: 0
@@ -116030,7 +116025,7 @@ MonoBehaviour:
   maxFOVChange: 30
   shakeIntensity: 0.01
   shakeFrequency: 25
-  quakemovment: {fileID: 1200419074}
+  quakemovment: {fileID: 0}
   orientation: {fileID: 1271487951}
   cameraPos: {fileID: 781350026}
   Overlaycam: {fileID: 1707554444}
@@ -129895,7 +129890,7 @@ MonoBehaviour:
   pulling: 0
   cooldown: 0
   SpinsPerTime: 5
-  quakemovement: {fileID: 1200419074}
+  quakemovement: {fileID: 0}
 --- !u!95 &935715474903972906
 Animator:
   serializedVersion: 5

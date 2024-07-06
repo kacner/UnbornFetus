@@ -85,6 +85,7 @@ public class QuakeMovement : MonoBehaviour
         waitTimer = waitingValue; // Initialize the wait timer
 
         lastPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+
         InvokeRepeating("DOSTUFF", 0.5f, 0.5f);
 
         rb = GetComponent<Rigidbody>();
@@ -107,6 +108,7 @@ public class QuakeMovement : MonoBehaviour
             Inspecting = true;
             StartCoroutine(Inspec1());
         }
+
 
         float timeTime = Time.deltaTime;
         /*if (quakeMovement != null && quakeMovement.CheckGround() != true)

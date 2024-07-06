@@ -1,9 +1,34 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
+
+/** 
+ * ═════════ஜ۩۞۩ஜ═════════
+ *       Code Shortcut
+ *  
+ *  Player Input Method(CFM)
+ *  Calculate Frictrion Method (CFM)
+ *  Calculate Movment Meothod (CMM)
+ *  Get Jump Velocity Method (GPVM)
+ *  Face Cam Method (FCM)
+ *  DoStuff Method (DSM)
+ *  Update Coin Count Method (UCCM)
+ *  ReRunner Method (RRM)
+ *  
+ *  Jumpibil Objects Check Bool (JOCB)
+ *  
+ *  OnTrigger Colider (OC)
+ *  
+ *  Speed Coin Timer IEnumerator (SCTIE)
+ *  CointTimer IEnumerator (CIE)
+ *  Inspec1 IEnumerator (IIE)
+ * 
+ * ═════════ஜ۩۞۩ஜ═════════
+ **/
+
 
 public class MainPlayerScripted : MonoBehaviour
 {
@@ -46,6 +71,12 @@ public class MainPlayerScripted : MonoBehaviour
     public GameObject Karambit;
     public TextMeshPro CoinCountTmp;
 
+    [Header("PedoMeter Settings")]
+    public TextMeshProUGUI textMeshPro;
+
+    private Vector3 lastPosition;
+    private float totalDistance;
+
     private bool CanPickupSpeedCoin = true;
     private bool CanPickupCoin = true;
     private bool KarambitPickedup = false;
@@ -64,6 +95,8 @@ public class MainPlayerScripted : MonoBehaviour
 
         if (KarambitPickedup == false)
                 Karambit.SetActive(false);
+
+        lastPosition = new Vector3(transform.position.x, 0f, transform.position.z);
 
     }
 
@@ -90,6 +123,20 @@ public class MainPlayerScripted : MonoBehaviour
     }
 
     // Calculate Frictrion Method (CFM)
+    private Vector3 CalculateFriction(Vector3 currentVelocity)
+    {
+        // Check if the object is grounded
+        isGrounded = JumpibleObjects();
+        float speed = currentVelocity.magnitude;
+
+        // Return the current velocity if not grounded, jumping, or stationary
+        if (!isGrounded || Input.GetButton("Jump") || speed == 0f)
+            return currentVelocity;
+
+        // Calculate the speed drop due to friction and apply it to the current velocity
+        float drop = speed * friction * Time.deltaTime;
+        return currentVelocity * (Mathf.Max(speed - drop, 0f) / speed);
+    }
 
     // Calculate Movment Meothod (CMM)
     private Vector3 CalculateMovement(Vector2 input, Vector3 currentVelocity)
@@ -147,10 +194,46 @@ public class MainPlayerScripted : MonoBehaviour
     }
 
     // Face Cam Method (FCM)
+    void FaceCam()
+    {
+        // Compute the vector from the object to the camera and ensure rotation affects only the horizontal plane
+        Vector3 directionToCamera = mainCamera.position - transform.position;
+        directionToCamera.y = 0;
+
+        // Determine the rotation needed to face the camera and apply an additional -90 degree rotation around the Y-axis
+        Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
+        Quaternion rotationOffset = Quaternion.Euler(0, -90f, 0);
+        targetRotation *= rotationOffset;
+
+        // Smoothly transition to the target rotation using Quaternion.Slerp
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
 
     // DoStuff Method (DSM)
+    private void DOSTUFF()
+    {
+        // Get the current position with y set to 0 for horizontal calculations
+        Vector3 currentPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+
+        // Calculate and add the distance moved this frame to the total distance
+        float distanceThisFrame = Vector3.Distance(currentPosition, lastPosition);
+        totalDistance += distanceThisFrame;
+
+        // Update last position and display total distance
+        lastPosition = currentPosition;
+        textMeshPro.text = totalDistance.ToString("F0");
+
+        // Reset total distance and last position
+        totalDistance = 0f;
+        lastPosition = Vector3.zero;
+    }
 
     // Update Coin Count Method (UCCM)
+    void UpdateCoinCount()
+    {
+        // Update the text component with the current coin count formatted as currency
+        CoinCountTmp.text = "$" + coinCount.ToString();
+    }
 
     // ReRunner Method (RRM)
     // To provent overloading when there is a void update
