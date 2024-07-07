@@ -16,7 +16,7 @@ public class Slotmachine : MonoBehaviour
 
     private Animator animator;
 
-    public QuakeMovement quakemovement;
+    public MainPlayerScripted quakemovement;
 
     void Start()
     {
