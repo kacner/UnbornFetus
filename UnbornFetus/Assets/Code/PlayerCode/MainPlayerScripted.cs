@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -109,6 +110,13 @@ public class MainPlayerScripted : MonoBehaviour
         Vector3 Velocity = GetComponent<Rigidbody>().velocity; // Collects pl*ayers curent velocity 
         Velocity += CalculateMovement(PlayerInput(), Velocity);
         GetComponent<Rigidbody>().velocity = Velocity;
+
+        if (GetComponent<Rigidbody>().velocity.magnitude > 1f)
+        {
+            FaceCam();
+        }
+
+
     }
 
     // Player Input Method(CFM)
