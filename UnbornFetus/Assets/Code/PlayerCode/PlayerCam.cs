@@ -22,7 +22,7 @@ public class PlayerCam : MonoBehaviour
     public float shakeFrequency = 25f; // Frequency of the camera shake
 
     [Header("References Objects")]
-    public QuakeMovement quakemovment; // Reference to the QuakeMovement component
+    public MainPlayerScripted mainplayerscripted; // Reference to the MainPlayerScripted component
     public Transform orientation; // Transform for the orientation
     public Transform cameraPos; // Position of the camera
 
@@ -58,7 +58,7 @@ public class PlayerCam : MonoBehaviour
     private void FixedUpdate()
     {
         // Update the current velocity based on the player's rigidbody velocity
-        currentVelocity = quakemovment.GetComponent<Rigidbody>().velocity.magnitude;
+        currentVelocity = mainplayerscripted.GetComponent<Rigidbody>().velocity.magnitude;
     }
 
     void Update()
@@ -141,8 +141,8 @@ public class PlayerCam : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            quakemovment = player.GetComponent<QuakeMovement>();
-            if (quakemovment == null)
+            mainplayerscripted = player.GetComponent<MainPlayerScripted>();
+            if (mainplayerscripted == null)
                 Debug.LogError("QuakeMovement component not found on player object.");
         }
         else

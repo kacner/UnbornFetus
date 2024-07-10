@@ -262,8 +262,8 @@ public class MainPlayerScripted : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Get the CoinFunctionality component from the collided object
-        coinFucntionality = other.GetComponent<CoinFunctionality>();
-        coinFucntionality.collition(); // Call the collision function
+       /* coinFucntionality = other.GetComponent<CoinFunctionality>();
+        coinFucntionality.collition(); // Call the collision function*/
 
         // Check if the collided object is a SpeedCoin and if the player can pick it up
         if (other.gameObject.tag == "SpeedCoin" && CanPickupSpeedCoin)
@@ -295,7 +295,7 @@ public class MainPlayerScripted : MonoBehaviour
     IEnumerator SpeedCoinTimer(float time)
     {
         yield return new WaitForSeconds(time);
-        CanPickupCoin = true;
+        CanPickupSpeedCoin = true;
     }
 
     // CointTimer IEnumerator (CIE)

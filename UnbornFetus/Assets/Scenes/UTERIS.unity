@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -116025,7 +116025,7 @@ MonoBehaviour:
   maxFOVChange: 30
   shakeIntensity: 0.01
   shakeFrequency: 25
-  quakemovment: {fileID: 0}
+  mainplayerscripted: {fileID: 0}
   orientation: {fileID: 1271487951}
   cameraPos: {fileID: 781350026}
   Overlaycam: {fileID: 1707554444}
@@ -129870,7 +129870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &935715474903972905
 MonoBehaviour:
   m_ObjectHideFlags: 0
