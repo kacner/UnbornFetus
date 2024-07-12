@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class PlayerInterractiv : MonoBehaviour
 {
-    public float maxDistance = 10f; // Triggering raing 
-    public bool Triggered; // Outside Triggering 
+    public float maxDistance = 10f; // Triggering range
+    public bool Triggered; // Outside triggering
 
     [Header("DEBUG")]
-    public bool ShowRayCastPoint = false; // Debug 
+    public bool ShowRayCastPoint = false; // Debug
 
-    Camera mainCamera = Camera.main; // Connecting the main camera to an object
+    public string TargetName;
+
+    private RaycastHit hit;
+    Camera mainCamera;
 
     void Start()
     {
+        mainCamera = Camera.main; // Connecting the main camera to an object
         Triggered = false; // Failsafe to prevent something from triggering from the start by mistake
-        if (mainCamera == null) // Failsafe if it cant fine cam with the tag MainCamra
+        if (mainCamera == null) // Failsafe if it can't find cam with the tag MainCamera
         {
             Debug.LogError("Main camera not found. Please ensure your camera is tagged as 'MainCamera'.");
             return;
@@ -24,7 +28,16 @@ public class PlayerInterractiv : MonoBehaviour
 
     void Update()
     {
-        RaycastPoint();
+        if (mainCamera != null)
+        {
+            RaycastPoint();
+        }
+
+        if (Triggered)
+        {
+            Debug.Log("Ray hit: " + hit.collider.name);
+            TargetName = hit.collider.gameObject.name;
+        }
     }
 
     public void RaycastPoint()
@@ -32,15 +45,14 @@ public class PlayerInterractiv : MonoBehaviour
         Transform cameraTransform = mainCamera.transform;
         Vector3 direction = cameraTransform.forward;
 
-        RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, direction, out hit, maxDistance))
         {
             Triggered = true;
-            Debug.Log("Ray hit: " + hit.collider.name);
 
             if (ShowRayCastPoint)
             {
                 Debug.DrawRay(cameraTransform.position, direction * maxDistance, Color.red);
+                Debug.Log("Objects name : " + TargetName);
             }
         }
         else
@@ -54,7 +66,7 @@ public class PlayerInterractiv : MonoBehaviour
         }
     }
 
-    /** Optional: Draw gizmos to visualize ray in the Scene and Game views
+    // Optional: Draw gizmos to visualize ray in the Scene and Game views
     void OnDrawGizmos()
     {
         if (ShowRayCastPoint)
@@ -70,5 +82,4 @@ public class PlayerInterractiv : MonoBehaviour
             Gizmos.DrawLine(cameraTransform.position, cameraTransform.position + cameraTransform.forward * maxDistance);
         }
     }
-    **/
 }
