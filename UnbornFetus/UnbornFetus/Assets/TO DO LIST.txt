@@ -1,5 +1,0 @@
-gör coin hitboxes större
-fixa cameran
-first person
-fixa movement scriptet
-ta bort eller minska coin cooldownen
