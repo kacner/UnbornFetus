@@ -1,102 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class InteractivComponent : MonoBehaviour
 {
-    PlayerInterractiv playerInteractive;
+    public PlayerInterractiv playerInterractiv;
 
-    [Header("Audio Interface")]
-    public bool activateAudio; // Flag to activate audio
-    public AudioSource audioSystem; // Reference to the AudioSource component
-    public AudioClip audioClip; // Reference to the AudioClip to be played
+    public AudioSource audioSystem;
+    public AudioClip audioClip;
 
-    [Header("UI")]
-    public GameObject uiText; // Reference to the UI text object
-
-    private bool isPlaying = false; // Flag to check if the audio is playing
-    private bool uiShow = false; // Flag to control UI visibility
+    private bool isPlaying = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        uiShow = false; // Initialize UI visibility to false
-        UIImplement(); // Call to update the UI visibility
+        playerInterractiv = FindObjectOfType<PlayerInterractiv>();
 
-        playerInteractive = FindObjectOfType<PlayerInterractiv>(); // Find the PlayerInteractive component in the scene
-
-        if (playerInteractive == null)
+        if (playerInterractiv == null)
         {
-            Debug.LogError("PlayerInteractive component not found in the scene."); // Log an error if PlayerInteractive is not found
+            Debug.LogError("PlayerInterractiv component not found in the scene.");
+        }
+
+        // Check if playerInterractiv is null
+        if (playerInterractiv == null)
+        {
+            Debug.LogError("PlayerInterractiv component not found on the same GameObject.");
         }
 
         // Check if audioSystem is assigned
         if (audioSystem == null)
         {
-            Debug.LogError("AudioSource not assigned in the Inspector."); // Log an error if AudioSource is not assigned
+            Debug.LogError("AudioSource not assigned in the Inspector.");
         }
 
         // Optionally assign the audioClip to the audioSystem if not done in the Inspector
         if (audioSystem != null && audioClip != null)
         {
-            audioSystem.clip = audioClip; // Assign the audio clip to the audio source
+            audioSystem.clip = audioClip;
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (playerInteractive.Triggered)
+        if (playerInterractiv != null && audioSystem != null)
         {
-            if (activateAudio == true && playerInteractive.TargetName == gameObject.name)
+            if (playerInterractiv.TargetName == gameObject.name && !audioSystem.isPlaying)
             {
-                uiShow = true; // Show UI if conditions are met
-                UIImplement(); // Update the UI
-                AudioImplement(); // Play the audio
+                audioSystem.Play();
+                isPlaying = true;
             }
-            else
+             
+            if (!audioSystem.isPlaying)
             {
-                uiShow = false; // Hide UI if conditions are not met
-                UIImplement(); // Update the UI
-            }
-        }
-        else
-        {
-            uiShow = false; // Hide UI if the player is not interacting
-            UIImplement(); // Update the UI
-        }
-    }
-
-    // Method to update the UI visibility
-    void UIImplement()
-    {
-        if (uiShow)
-            uiText.SetActive(true); // Show the UI text
-        else
-            uiText.SetActive(false); // Hide the UI text
-    }
-
-    // Method to handle audio playback
-    void AudioImplement()
-    {
-        if (playerInteractive != null && audioSystem != null && Input.GetKeyDown("e")) // Check if the 'e' key is pressed
-        {
-            Debug.LogWarning("Audio Active");
-
-            if (playerInteractive.TargetName == gameObject.name && !audioSystem.isPlaying) // Check if the correct object is interacted with and audio is not playing
-            {
-                audioSystem.Play(); // Play the audio
-                isPlaying = true; // Set the flag to true
-                uiShow = false; // Hide the UI
-                UIImplement(); // Update the UI
-            }
-
-            if (!audioSystem.isPlaying) // Check if the audio is not playing
-            {
-                isPlaying = false; // Set the flag to false
-                uiShow = true; // Show the UI
-                UIImplement(); // Update the UI
+                isPlaying = false;
             }
         }
     }
