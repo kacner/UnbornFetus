@@ -218,7 +218,7 @@ public class MainPlayerScripted : MonoBehaviour
     }
 
     // DoStuff Method (DSM)
-    private void DOSTUFF()
+    private void PedometerCalc()
     {
         // Get the current position with y set to 0 for horizontal calculations
         Vector3 currentPosition = new Vector3(transform.position.x, 0f, transform.position.z);
