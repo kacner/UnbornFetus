@@ -37,10 +37,6 @@ public class PlayerCam : MonoBehaviour
     private GameObject player; // Reference to the player object
     private ParticleSystem particleSystem; // Particle system for speed lines
 
-    /*public bool FirstPerson = false; //Bool deciding if the player is in first person or third person
-    public Transform FirstPersonCamPos;
-    public Transform ThirdPersonCamPos;*/
-
     void Start()
     {
         // Hide Cursor
@@ -80,18 +76,6 @@ public class PlayerCam : MonoBehaviour
         
 
         Speedlines(currentVelocity); // Update speed lines effect
-
-       /* if (Input.GetKeyDown(KeyCode.V) && FirstPerson == false)
-        {
-            FirstPerson = true;
-            cameraPos = FirstPersonCamPos;
-        }
-        else
-        {
-            FirstPerson = false;
-            cameraPos = ThirdPersonCamPos;
-        }*/
-
     }
 
     void PlayerCamra()
