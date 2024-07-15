@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractivComponent : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class InteractivComponent : MonoBehaviour
 
     private bool isPlaying = false; // Flag to check if the audio is playing
     private bool uiShow = false; // Flag to control UI visibility
+
+    public RawImage CursorImage;
 
     // Start is called before the first frame update
     void Start()
@@ -72,9 +75,15 @@ public class InteractivComponent : MonoBehaviour
     void UIImplement()
     {
         if (uiShow)
+        {
+            CursorImage.color = Color.green;
             uiText.SetActive(true); // Show the UI text
+        }
         else
+        {
             uiText.SetActive(false); // Hide the UI text
+            CursorImage.color = Color.white;
+        }
     }
 
     // Method to handle audio playback
