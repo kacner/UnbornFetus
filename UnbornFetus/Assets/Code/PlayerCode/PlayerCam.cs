@@ -20,11 +20,16 @@ public class PlayerCam : MonoBehaviour
     public float maxFOVChange = 30f; // Maximum change in Field of View
     public float shakeIntensity = 0.1f; // Intensity of the camera shake
     public float shakeFrequency = 25f; // Frequency of the camera shake
+    public bool Fistperson;
+    public bool Thurdperson;
 
     [Header("References Objects")]
     public MainPlayerScripted mainplayerscripted; // Reference to the MainPlayerScripted component
     public Transform orientation; // Transform for the orientation
-    public Transform cameraPos; // Position of the camera
+    public Transform cameraPosFirst; // First position of the camera 
+    public Transform cameraPosThurd; // third position of the camera 
+
+    public Transform CamTransformeationStravaganza;
 
     private Camera cam; // Camera component
     public Camera Overlaycam; // Camera component
@@ -49,6 +54,12 @@ public class PlayerCam : MonoBehaviour
         Color particleColor = new Color(startingColor.r, startingColor.g, startingColor.b, alpha);
         var mainModule = particleSystem.main;
         mainModule.startColor = particleColor;
+
+        if (Thurdperson)
+            Fistperson = false;
+
+        if (Fistperson)
+            Thurdperson = false;
     }
 
     private void Awake()
@@ -76,12 +87,22 @@ public class PlayerCam : MonoBehaviour
         
 
         Speedlines(currentVelocity); // Update speed lines effect
+        Campos();
+
+    }
+
+    void Campos()
+    {
+        // camra positon = Playerpos
+        cam.transform.position = cameraPosFirst.position;
+
+        // capra postion = offcenter playerpos
+        Vector3 offCenterPosition = cameraPosThurd.position;
+        cam.transform.position = offCenterPosition;
     }
 
     void PlayerCamra()
     {
-        transform.position = cameraPos.position; // Follow player
-
         // Get user input for mouse movement
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * snsX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * snsY;

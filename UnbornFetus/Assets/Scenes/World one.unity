@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 765524218}
-  m_IndirectSpecularColor: {r: 0.18839297, g: 0.038290136, b: 0.08749136, a: 1}
+  m_IndirectSpecularColor: {r: 0.18844558, g: 0.0382856, b: 0.08748527, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8149,9 +8149,13 @@ MonoBehaviour:
   maxFOVChange: 30
   shakeIntensity: 0.01
   shakeFrequency: 25
+  Fistperson: 0
+  Thurdperson: 0
   mainplayerscripted: {fileID: 0}
   orientation: {fileID: 2004122248}
-  cameraPos: {fileID: 1953637072}
+  cameraPosFirst: {fileID: 1953637072}
+  cameraPosThurd: {fileID: 884799448}
+  CamTransformeationStravaganza: {fileID: 2008249346}
   Overlaycam: {fileID: 365790424}
 --- !u!4 &815456220
 Transform:
@@ -8161,7 +8165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815456218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 246.9, y: 4.875004, z: -808}
+  m_LocalPosition: {x: 246.9, y: 4.987, z: -808.245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8303,6 +8307,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 102.84601, y: 0, z: 0}
+--- !u!1 &884799447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 884799448}
+  m_Layer: 0
+  m_Name: Person 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &884799448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884799447}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.44, z: -3.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1235432272}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &886427309
 GameObject:
   m_ObjectHideFlags: 0
@@ -14879,6 +14914,7 @@ Transform:
   - {fileID: 1369304713}
   - {fileID: 2004122248}
   - {fileID: 1953637072}
+  - {fileID: 884799448}
   - {fileID: 1289354134}
   - {fileID: 1457780547}
   m_Father: {fileID: 0}
@@ -14926,7 +14962,7 @@ MonoBehaviour:
   airAcceleration: 200
   jumpForce: 5
   isGrounded: 0
-  Cameran: {fileID: 815456218}
+  Cameran: {fileID: 0}
   mainCamera: {fileID: 2008249346}
   rayDirection: {x: 0, y: -1, z: 0}
   rayDistance: 0.1
@@ -22599,7 +22635,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1953637072}
   m_Layer: 0
-  m_Name: CamraPos
+  m_Name: Person 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22968,7 +23004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008249345}
   m_LocalRotation: {x: 0.20300017, y: -0, z: -0, w: 0.9791787}
-  m_LocalPosition: {x: 0.4, y: 3.333, z: -3.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
