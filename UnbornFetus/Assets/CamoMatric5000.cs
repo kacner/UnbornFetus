@@ -11,7 +11,7 @@ public class CamoMatric5000 : MonoBehaviour
 
     public Transform firstPov;
     public Transform thurdPov;
-    public MeshRenderer PlayerOBJMeshrenderer;
+    public SkinnedMeshRenderer PlayerOBJMeshrenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -26,19 +26,7 @@ public class CamoMatric5000 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
         {
             SwitchPov();
-            Debug.LogWarning("switched");
         }
-           /* if (Input.GetKeyDown(KeyCode.Q)) // firstperson
-            {
-                isActive = true;
-                isFirstPov = true;
-            }
-            if (Input.GetKeyDown(KeyCode.E)) //thirdperson
-            {
-                isActive = true;
-                isThurdPov = true;
-            }
-            UpdateCamera();*/
     }
 
     void UpdateCamera()
