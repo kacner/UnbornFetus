@@ -7,6 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCam : MonoBehaviour
 {
+    // Header attributes for organizing in the Inspector
     [Header("Camera Sensitivity")]
     public float snsX; // Sensitivity for the X-axis (horizontal)
     public float snsY; // Sensitivity for the Y-axis (vertical)
@@ -20,16 +21,11 @@ public class PlayerCam : MonoBehaviour
     public float maxFOVChange = 30f; // Maximum change in Field of View
     public float shakeIntensity = 0.1f; // Intensity of the camera shake
     public float shakeFrequency = 25f; // Frequency of the camera shake
-    public bool Fistperson;
-    public bool Thurdperson;
 
     [Header("References Objects")]
-    public MainPlayerScripted mainplayerscripted; // Reference to the MainPlayerScripted component
+    public MainPlayerScripted MainPlayerScripted; // Reference to the QuakeMovement component
     public Transform orientation; // Transform for the orientation
-    public Transform cameraPosFirst; // First position of the camera 
-    public Transform cameraPosThurd; // third position of the camera 
-
-    public Transform CamTransformeationStravaganza;
+    public Transform cameraPos;
 
     private Camera cam; // Camera component
     public Camera Overlaycam; // Camera component
@@ -54,22 +50,17 @@ public class PlayerCam : MonoBehaviour
         Color particleColor = new Color(startingColor.r, startingColor.g, startingColor.b, alpha);
         var mainModule = particleSystem.main;
         mainModule.startColor = particleColor;
-
-        if (Thurdperson)
-            Fistperson = false;
-
-        if (Fistperson)
-            Thurdperson = false;
     }
 
     private void Awake()
     {
         Time.timeScale = 1f;
     }
+
     private void FixedUpdate()
     {
         // Update the current velocity based on the player's rigidbody velocity
-        currentVelocity = mainplayerscripted.GetComponent<Rigidbody>().velocity.magnitude;
+        currentVelocity = MainPlayerScripted.GetComponent<Rigidbody>().velocity.magnitude;
     }
 
     void Update()
@@ -80,29 +71,25 @@ public class PlayerCam : MonoBehaviour
         if (currentVelocity > 0)
         {
             AdjustFOV(currentVelocity); // Adjust Field of View
-            ApplyCameraShake(currentVelocity); // Apply camera shake
+            //ApplyCameraShake(currentVelocity); // Apply camera shake
         }
         else
+        {
             cam.transform.localPosition = originalPosition; // Reset camera position when not moving
-        
+        }
 
         Speedlines(currentVelocity); // Update speed lines effect
-        Campos();
-
-    }
-
-    void Campos()
-    {
-        // camra positon = Playerpos
-        cam.transform.position = cameraPosFirst.position;
-
-        // capra postion = offcenter playerpos
-        Vector3 offCenterPosition = cameraPosThurd.position;
-        cam.transform.position = offCenterPosition;
     }
 
     void PlayerCamra()
     {
+
+        // Follow player position
+        transform.position = cameraPos.position;
+
+        // Debugging log
+        Debug.Log("DEBUG : CAMPOS " + cam.transform.position);
+
         // Get user input for mouse movement
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * snsX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * snsY;
@@ -138,17 +125,17 @@ public class PlayerCam : MonoBehaviour
         Mathf.Lerp(baseFOV, 0, fovChange);
     }
 
-    void ApplyCameraShake(float velocity)
+    /**void ApplyCameraShake(float velocity)
     {
         // Apply camera shake based on the current velocity
         float shakeAmount = Mathf.Sin(Time.time * shakeFrequency) * shakeIntensity * (velocity / 2);
         cam.transform.localPosition = originalPosition + Random.insideUnitSphere * shakeAmount;
-    }
+    }*/
 
     void Speedlines(float velocity)
     {
         // Update the alpha value of the speed lines based on the current velocity
-        float alpha = 1f / (1f + Mathf.Exp(-0.2f * (velocity - 40f))); // Formel: f(x) = 1 / (1 + e^(-0.2 * (x - 40)))
+        float alpha = 1f / (1f + Mathf.Exp(-0.2f * (velocity - 40f))); // Formula: f(x) = 1 / (1 + e^(-0.2 * (x - 40)))
 
         // Set the color of the particle system
         Color particleColor = new Color(startingColor.r, startingColor.g, startingColor.b, alpha);
@@ -162,9 +149,9 @@ public class PlayerCam : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            mainplayerscripted = player.GetComponent<MainPlayerScripted>();
-            if (mainplayerscripted == null)
-                Debug.LogError("QuakeMovement component not found on player object.");
+            MainPlayerScripted = player.GetComponent<MainPlayerScripted>();
+            if (MainPlayerScripted == null)
+                Debug.LogError("MainPlayerScripted component not found on player object.");
         }
         else
             Debug.LogError("Player object not found with tag 'Player'.");
