@@ -6,58 +6,64 @@ using UnityEngine;
 public class CamoMatric5000 : MonoBehaviour
 {
     private bool isActive;
-    private bool isInactive;
 
     public bool isFirstPov;
-    public bool isThurdPov;
 
     public Transform firstPov;
     public Transform thurdPov;
+    public MeshRenderer PlayerOBJMeshrenderer;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(isFirstPov)
-            isThurdPov = false;
-        else if(thurdPov)
-            isFirstPov = false;
-
         isActive = true;
+        UpdateCamera();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            isActive = true;
-            isFirstPov = true;
+            SwitchPov();
+            Debug.LogWarning("switched");
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            isActive = true;
-            isThurdPov = true;
-        }
-        Povchanger90somthingidk();
+           /* if (Input.GetKeyDown(KeyCode.Q)) // firstperson
+            {
+                isActive = true;
+                isFirstPov = true;
+            }
+            if (Input.GetKeyDown(KeyCode.E)) //thirdperson
+            {
+                isActive = true;
+                isThurdPov = true;
+            }
+            UpdateCamera();*/
     }
 
-    void Povchanger90somthingidk()
+    void UpdateCamera()
     {
         if (isActive)
         {
             if(isFirstPov)
             {
                 transform.position = firstPov.position;
-                isFirstPov = false;
+                PlayerOBJMeshrenderer.enabled = false;
             }
-            if(isThurdPov)
+            else
             {
                 transform.position = thurdPov.position;
-                isThurdPov = false;
+                PlayerOBJMeshrenderer.enabled = true;
             }
 
             isActive = false;
-            isInactive = true;
         }
+    }
+
+    void SwitchPov()
+    {
+        isFirstPov = !isFirstPov;
+        isActive = true;
+        UpdateCamera();
     }
 }

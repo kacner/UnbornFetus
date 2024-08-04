@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 765524218}
-  m_IndirectSpecularColor: {r: 0.18844558, g: 0.0382856, b: 0.08748527, a: 1}
+  m_IndirectSpecularColor: {r: 0.18839297, g: 0.038290136, b: 0.08749136, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5265,7 +5265,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0
+  m_Intensity: 1.53
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -17660,7 +17660,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235432271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 246.9, y: 5.5250053, z: -808}
+  m_LocalPosition: {x: 253.18, y: 5.5250053, z: -781.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23451,9 +23451,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 10.83
+  m_Intensity: 1.4
   m_Range: 217.47
-  m_SpotAngle: 84.58005
+  m_SpotAngle: 179
   m_InnerSpotAngle: 3.0802991
   m_CookieSize: 10
   m_Shadows:
@@ -25267,7 +25267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717345552}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 246.9, y: 5.5250053, z: -808}
+  m_LocalPosition: {x: 253.18, y: 5.5250053, z: -781.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27222,9 +27222,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFirstPov: 0
-  isThurdPov: 1
   firstPov: {fileID: 1953637072}
   thurdPov: {fileID: 8680542}
+  PlayerOBJMeshrenderer: {fileID: 1369304716}
 --- !u!1 &2036305177
 GameObject:
   m_ObjectHideFlags: 0
