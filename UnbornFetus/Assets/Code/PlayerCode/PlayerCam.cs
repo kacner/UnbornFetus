@@ -87,9 +87,6 @@ public class PlayerCam : MonoBehaviour
         // Follow player position
         transform.position = cameraPos.position;
 
-        // Debugging log
-        Debug.Log("DEBUG : CAMPOS " + cam.transform.position);
-
         // Get user input for mouse movement
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * snsX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * snsY;

@@ -73134,7 +73134,7 @@ MonoBehaviour:
   rayDirection: {x: 0, y: -1, z: 0}
   rayDistance: 0.1
   rotationSpeed: 5
-  coinCount: 0
+  coinCount: 300
   KarambitrotationSpeed: 360
   SlotmachineParent: {fileID: 1423342412}
   Karambit: {fileID: 919132148343158564}
@@ -116025,7 +116025,7 @@ MonoBehaviour:
   maxFOVChange: 30
   shakeIntensity: 0.01
   shakeFrequency: 25
-  mainplayerscripted: {fileID: 0}
+  MainPlayerScripted: {fileID: 0}
   orientation: {fileID: 1271487951}
   cameraPos: {fileID: 781350026}
   Overlaycam: {fileID: 1707554444}
@@ -129870,7 +129870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &935715474903972905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129890,7 +129890,7 @@ MonoBehaviour:
   pulling: 0
   cooldown: 0
   SpinsPerTime: 5
-  quakemovement: {fileID: 0}
+  quakemovement: {fileID: 1200419077}
 --- !u!95 &935715474903972906
 Animator:
   serializedVersion: 5

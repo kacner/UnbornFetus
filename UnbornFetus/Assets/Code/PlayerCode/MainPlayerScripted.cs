@@ -284,6 +284,8 @@ public class MainPlayerScripted : MonoBehaviour
         // Check if the collided object is a Coin and if the player can pick it up
         if (other.gameObject.tag == "Coin" && CanPickupCoin)
         {
+           var script = other.GetComponent<CoinFunctionality>();
+            script.collition();
             CanPickupCoin = false; // Disable picking up another coin
             coinCount++; // Increase the coin count
             StartCoroutine(CoinTimer(0.2f)); // Start a coroutine to reset coin pickup
