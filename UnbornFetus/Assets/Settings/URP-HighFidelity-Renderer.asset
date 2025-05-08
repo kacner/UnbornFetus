@@ -16,9 +16,10 @@ MonoBehaviour:
   settings:
     effectMaterial: {fileID: 2100000, guid: 5ec7c97768adbf848ab69118610a8094, type: 2}
     intensity: 1
-    DitheringIntensity: 0.014
+    DitheringIntensity: 0.0042
     PixelSize: 5
-    ColorAmount: 75
+    ColorAmount: 150
+    _Saturation: 0
     renderPassEvent: 600
 --- !u!114 &-1878332245247344467
 MonoBehaviour:

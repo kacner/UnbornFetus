@@ -11,6 +11,7 @@ public class FullscreenFeature : ScriptableRendererFeature
         public float DitheringIntensity = 1f;
         public float colorIntensity = 1f;
         public float ColorAmount = 1f;
+        public float _Saturation = 0f;
         private RenderTargetHandle tempTexture;
 
         public FullscreenPass()
@@ -23,7 +24,6 @@ public class FullscreenFeature : ScriptableRendererFeature
             if (effectMaterial == null)
                 return;
 
-            // **Now** we grab the camera's color target inside Execute:
             RenderTargetIdentifier src = renderingData.cameraData.renderer.cameraColorTarget;
             RenderTextureDescriptor desc = renderingData.cameraData.cameraTargetDescriptor;
 
@@ -34,8 +34,8 @@ public class FullscreenFeature : ScriptableRendererFeature
             effectMaterial.SetFloat("_DitheringIntensity", DitheringIntensity);
             effectMaterial.SetFloat("_PixelSize", _PixelSize);
             effectMaterial.SetFloat("_ColorAmount", ColorAmount);
+            effectMaterial.SetFloat("_Saturation", _Saturation);
 
-            // Blit: src → temp with effect, then temp → src
             cmd.Blit(src, tempTexture.Identifier(), effectMaterial);
             cmd.Blit(tempTexture.Identifier(), src);
 
@@ -52,6 +52,7 @@ public class FullscreenFeature : ScriptableRendererFeature
         [Range(0, 0.2f)] public float DitheringIntensity = 1f;
         [Range(1, 500)] public int PixelSize = 5;
         [Range(0, 255)] public float ColorAmount = 1f;
+        [Range(0, 2)] public float _Saturation = 0f;
         public RenderPassEvent renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
     }
 
@@ -67,6 +68,7 @@ public class FullscreenFeature : ScriptableRendererFeature
             DitheringIntensity = settings.DitheringIntensity,
             _PixelSize = settings.PixelSize,
             ColorAmount = settings.ColorAmount,
+            _Saturation = settings._Saturation,
             renderPassEvent = settings.renderPassEvent
         };
     }
@@ -76,8 +78,6 @@ public class FullscreenFeature : ScriptableRendererFeature
         if (settings.effectMaterial == null)
             return;
 
-        // We no longer grab cameraColorTarget here!
-        // We only enqueue the pass; it will pull src during Execute.
         renderer.EnqueuePass(pass);
     }
 }
